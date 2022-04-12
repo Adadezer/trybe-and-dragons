@@ -1,4 +1,4 @@
-import Fighter from './Fighter';
+import Fighter, { SimpleFighter } from './Fighter';
 import Race, { Elf } from './Races';
 import Archetype, { Mage } from './Archetypes';
 import Energy from './Energy';
@@ -15,9 +15,13 @@ class Character implements Fighter {
   readonly _energy: Energy;
   private _specialAttack: number;
 
-  constructor(name: string) {
-    this._race = new Elf(name, 10);
-    this._archetype = new Mage(name);
+  constructor(
+    name: string,
+    race: Race = new Elf(name, 10),
+    archetype: Archetype = new Mage(name),
+  ) {
+    this._race = race;
+    this._archetype = archetype;
     this._maxLifePoints = (this._race.maxLifePoints / 2);
     this._lifePoints = this._maxLifePoints;
     this._strength = getRandomInt(1, 10);
@@ -29,8 +33,6 @@ class Character implements Fighter {
     };
     this._specialAttack = getRandomInt(5, 20);
   }
-  
-  lifepoints!: number; // correções do vscode
 
   get race(): Race {
     return this._race;
@@ -74,7 +76,7 @@ class Character implements Fighter {
     return this._lifePoints;
   }
 
-  attack(enemy: Fighter): void {
+  attack(enemy: SimpleFighter): void {
     enemy.receiveDamage(this._strength);
   }
 
