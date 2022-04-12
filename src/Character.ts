@@ -29,6 +29,8 @@ class Character implements Fighter {
     };
     this._specialAttack = getRandomInt(5, 20);
   }
+  
+  lifepoints!: number; // correções do vscode
 
   get race(): Race {
     return this._race;
@@ -65,7 +67,7 @@ class Character implements Fighter {
       this._lifePoints -= damage;
     }
 
-    if (this.lifePoints <= 0) {
+    if (this._lifePoints <= 0) {
       this._lifePoints = -1;
     }
 
